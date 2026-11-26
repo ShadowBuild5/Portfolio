@@ -1,0 +1,17 @@
+# dependencies and build output
+node_modules/
+dist/
+
+# logs
+*.log
+npm-debug.log*
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# local env files, if they ever appear
+.env
+.env.*

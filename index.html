@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shadow Blackie — Software Developer</title>
+    <meta name="description" content="Portfolio of Shadow Blackie, software developer." />
+  </head>
+  <body>
+    <canvas id="bg" aria-hidden="true"></canvas>
+    <canvas id="fg" aria-hidden="true"></canvas>
+
+    <nav id="sidebar" aria-label="Scenes"></nav>
+
+    <main id="stage" aria-live="polite"></main>
+
+    <button id="prev" class="edge edge-left" aria-label="Previous scene">&#8592;</button>
+    <button id="next" class="edge edge-right" aria-label="Next scene">&#8594;</button>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
