@@ -1,0 +1,45 @@
+name: Deploy to GitHub Pages
+
+# When to run: on every push to main, and manually from the Actions tab.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Permissions the workflow token needs in order to publish to Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# If two deploys start at once, only keep the newest.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  # Job 1: build the site into dist/
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4          # download your repo code
+      - uses: actions/setup-node@v4        # install Node.js
+        with:
+          node-version: 22
+          cache: npm                       # reuse downloaded packages between runs
+      - run: npm ci                        # clean install from package-lock.json
+      - run: npm run build                 # tsc type-check + vite build -> dist/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist                       # the folder to publish
+
+  # Job 2: hand the built folder to GitHub Pages
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
